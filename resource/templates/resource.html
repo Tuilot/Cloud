@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}
+    竞赛资源
+{% endblock %}
+{% block left_content %}
+    <div class="container row">
+        {% for data in resource_set %}
+        <div class="shadow news-content" >
+            <div class="news-navigation">
+                <strong class="news-desc">{{ data.resource_type_text }}</strong>
+                <a href="{% url 'resource_more' %}?type={{ data.resource_type }}" class="news-more">查看更多></a>
+            </div>
+            <div>
+                <table class="news-table " id="news_table">
+                    <tbody id="news-list">
+                    {% for resource in data.resource_list %}
+                        <tr class="news-info">
+                            <td class="news-title" >
+                                <a class="news-title-text" href="{{ resource.file.url }}" target="_blank"
+                                   style="text-decoration: none" title="{{ resource.file_show_name }}">
+                                    {{ resource.file_show_name|slice:20 }}{% if resource.file_show_name|length > 20 %}...{% endif %}
+                                </a>
+                            </td>
+                            <td class="news-time">{{ resource.upload_time|date:'Y-m-d' }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block right_content %}
+    <div style="margin-top: 30px;padding: 20px;background-color: #f8f9fa;">
+        <form action="">
+
+
+            <label for="search"><strong>关键字：</strong></label>
+            <input type="text" name="search" class="form-control" id="search">
+            <button type="submit" class="btn btn-success" style="text-align: center; margin-top: 10px;">搜索</button>
+        </form>
+    </div>
+{% endblock %}

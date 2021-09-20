@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block title %}
+    首页
+{% endblock %}
+{% block left_content %}
+    <!-- <script>
+        function t(seconds) {
+            var hour = Math.floor(seconds / 3600)
+            var minute = Math.floor((seconds % 3600) / 60)
+            var duration_time = ''
+            if (hour < 10) {
+                duration_time += '0'
+            }
+            duration_time += hour + '：'
+            if (minute < 10) {
+                duration_time += '0'
+            }
+            duration_time += minute
+            document.write(duration_time)
+        }
+    </script> -->
+    <!-- <div>
+        <div class="shadow news-content" style="height: auto; width: 90%;">
+            <div class="news-navigation">
+                <strong class="news-desc">近期比赛</strong>
+                <a href="{% url 'calendar' %}" class="news-more">查看比赛日历></a>
+            </div>
+            <div>
+                <table class="news-table " id="news_table">
+                    <tbody id="news-list">
+                    {% for contest in contests %}
+                        <tr class="news-info">
+                            <td style="padding: 3px;">
+                                <a class="news-title-text" target="_blank" data-toggle="modal"
+                                   data-target="#contest_{{ contest.id }}"
+                                   style="text-decoration: none" title="{{ contest.title }}">
+                                    {{ contest.title|slice:100|safe }}{% if contest.title|length > 100 %}
+                                        ...{% endif %}
+                                </a>
+                            </td>
+                            <td class="news-time">{{ contest.start_time|date:'Y-m-d  H: i' }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div> -->
+
+    <div>
+        <div class="shadow news-content" style="height: auto; width: 90%">
+            <div class="news-navigation">
+                <strong class="news-desc">最新资源</strong>
+                <a href="{% url 'resource' %}" class="news-more">查看更多></a>
+            </div>
+            <div>
+                <table class="news-table " id="news_table">
+                    <tbody id="news-list">
+                    {% for resource in resources %}
+                        <tr class="news-info">
+                            <td class="news-title">
+                                <a class="news-title-text" href="{{ resource.file.url }}" target="_blank"
+                                   style="text-decoration: none" title="{{ resource.file_show_name }}">
+                                    {{ resource.file_show_name|slice:100|safe }}
+                                            {% if resource.file_show_name|length > 100 %}
+                                                ...{% endif %}
+                                </a>
+                            </td>
+                            <td class="news-time">{{ resource.upload_time|date:'Y-m-d' }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="contest_detail">
+        {% for contest in contests %}
+            <div class="modal fade" id="contest_{{ contest.id }}" tabindex="-1" role="dialog"
+                 aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">{{ contest.title|safe }}
+                            </h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                            </button>
+                        </div>
+                        <div class="modal-body">比赛开始时间：{{ contest.start_time|date:'Y-m-d H：i' }}</div>
+                        <div class="modal-body">比赛结束时间：{{ contest.end_time|date:'Y-m-d H：i' }}</div>
+                        <div class="modal-body">比赛时长：
+                            <script language="JavaScript">t('{{ contest.duration_time }}')</script>
+                        </div>
+                        <div class="modal-body">比赛平台：{{ contest.oj_name }}</div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" target="_self"
+                                    onclick="window.open('{{ contest.url }}')">
+                                点击前往
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block right_content %}
+    <div class="card mb-3">
+        <div class="card-header" style="text-align: center"><strong>公告栏</strong></div>
+        <div class="card-body">
+            <h5 class="card-title">{{ announcement.title }}</h5>
+            <p class="card-text">{{ announcement.content }}</p>
+{#            <h5 class="card-title">欢迎各位光临本站！</h5>#}
+{#            <p class="card-text">本站处于开发初期，各个功能可能不完善。如果发现存在的问题或可改进的地方，可与我联系。</p>#}
+        </div>
+    </div>
+{% endblock %}

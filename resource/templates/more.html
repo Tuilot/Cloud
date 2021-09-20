@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ file_type_text }}
+{% endblock %}
+{% block left_content %}
+    <div>
+        <h3>{{ file_type_text }}</h3>
+    </div>
+    <div>
+        {% if has_file == False %}
+            <strong>暂无此类资源</strong>
+        {% else %}
+            <table class="table table-hover" id="problem_table">
+                <tr>
+                    <th scope="col">文件名</th>
+                    <th scope="col">上传日期</th>
+                    <th scope="col">文件大小</th>
+                </tr>
+                <tbody id="problem_list">
+                {% for resource in resources %}
+                    <tr style="line-height: 10px;">
+                        <td>
+                            <a class="news-title-text" href="{{ resource.file.url }}" target="_blank"
+                               style="text-decoration: none" title="{{ resource.file_show_name }}">
+                                {{ resource.file_show_name|slice:50 }}{% if resource.file_show_name|length > 50 %}
+                                    ...{% endif %}
+                            </a>
+                        </td>
+                        <td>{{ resource.upload_time|date:'Y-m-d' }}</td>
+                        <td>{{ resource.file_size|filesizeformat }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+    {% include 'paginations.html' %}
+{% endblock %}
+{% block right_content %}
+    <div style="margin-top: 30px;padding: 20px;background-color: #f8f9fa;">
+        <form action="">
+            <label for="type"><strong>资源类型：</strong></label>
+            <select name="type" id="type" class="form-control">
+                {% for key, value in all_resource_type %}
+                    <option id="name" value="{{key}}" {% if key == resource_type %}selected{% endif %}>{{value}}</option>
+                {% endfor %}
+            </select>
+            <label for="search"><strong>关键字：</strong></label>
+            <input type="text" name="search" class="form-control" id="search">
+            <button type="submit" class="btn btn-success" style="text-align: center; margin-top: 10px;">搜索</button>
+        </form>
+    </div>
+{% endblock %}

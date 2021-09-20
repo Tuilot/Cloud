@@ -1,0 +1,63 @@
+{% extends 'manage_base.html' %}
+{% block title %}
+    账号管理
+{% endblock %}
+{% block content %}
+    <div style="margin-top: 20px;">
+        <table class="table table-hover" id="problem_table">
+            <tr style="line-height: 10px; text-align: center">
+                <th scope="col">ID</th>
+                <th scope="col">用户名</th>
+                <th scope="col">邮箱</th>
+                <th scope="col">注册日期</th>
+                <th scope="col">管理员</th>
+                <th scope="col">超级管理员</th>
+            </tr>
+            <tbody id="problem_list">
+            {% for account in accounts %}
+                <tr style="line-height: 5px; text-align: center" id="user_{{ account.id }}">
+                    <td display="inline">{{ account.id }}</td>
+                    <td>{{ account.username }}</td>
+                    <td>{{ account.email }}</td>
+                    <td>{{ account.register_data|date:'Y-m-d' }}</td>
+                    <td onclick="set_permission('{{ account.id }}', 'manager')" style="cursor: pointer">
+                        {% if 'account.manager' in account.get_all_permissions %}
+                            True
+                        {% else %}
+                            False
+                        {% endif %}
+                    </td>
+                    <td onclick="set_permission('{{ account.id }}', 'superuser')" style="cursor: pointer">{{ account.is_superuser }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if pagination %}
+    <div class="col-9" style="margin-top: 20px;">
+        <ul class="pagination" id="pagination">
+            <li class="page-item {% if pagination.is_first_page == Ture %}disabled{% endif %}">
+                <a class="page-link"
+                   {% if pagination.is_first_page == False %}href="{% url 'account_manage' %}?page=1" {% endif %}>< </a>
+            </li>
+
+            {% for page in pagination.pagination %}
+                <li class="page-item {% if page == current_page %} active{% endif %}">
+                    <a class="page-link"
+                       {% if page != '...' %}href="{% url 'account_manage' %}?page={{ page }}{% endif %}">{{ page }}</a>
+                </li>
+            {% endfor %}
+
+            <li class="page-item {% if pagination.is_last_page == Ture %}disabled{% endif %}">
+                <a class="page-link"
+                   {% if pagination.is_last_page == False %}href="{% url 'account_manage' %}?page={{ pagination.page_count }}" {% endif %}>></a>
+            </li>
+        </ul>
+    </div>
+    {% endif %}
+    <script>
+        function set_permission(user_id, role) {
+
+        }
+    </script>
+{% endblock %}
