@@ -18,23 +18,13 @@ from django.conf import settings
 from django.urls import path, include
 from django.conf.urls.static import static
 
-from Cloud import views
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('resource.urls')),
-    # path('article/', include('article.urls')),
     path('api/', include('api.urls')),
-    # path('mdeditor/', include('mdeditor.urls')),
     path('account/', include('account.urls')),
-    # path('calendar/', include('contest_calendar.urls')),
     path('manager/', include('manager.urls')),
     path('resource/', include('resource.urls')),
-    # path('comments/', include('comments.urls')),
-    # path('discussions/', include('discussions.urls')),
-    # path('reward/', include('reward.urls')),
-    # path('message/', include('message.urls')),
-    # path('recent/', include('recent.urls')),
 ]
 
 if settings.DEBUG:

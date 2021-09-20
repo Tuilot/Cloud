@@ -1,7 +1,6 @@
 from django.urls import path
 
-from account.views import profile_views, account_status_views, show_info_views, premissions_views, \
-    my_favorite_views
+from account.views import profile_views, account_status_views, show_info_views, premissions_views
 
 urlpatterns = [
     path('login/', account_status_views.login, name='login'),

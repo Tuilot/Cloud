@@ -1,23 +1,6 @@
-import random
-# from article.models import ProblemArticle
-# from spider.models import BlogSpiderVerify
+
 from urllib.parse import urlparse
 
-
-# def create_article_id():
-#     seq = 'abcdefghijklmnopqrstuvwxyz123456789'
-#     new_id = ''
-#     while new_id == '':
-#         for i in range(0, 10):
-#             if i == 0:
-#                 char = random.choice(seq)
-#                 new_id = new_id + str(char)
-#             else:
-#                 char = random.choice(seq)
-#                 new_id = new_id + str(char)
-#         if len(ProblemArticle.objects.filter(id__exact=new_id)) > 0:
-#             new_id = ''
-#     return new_id
 
 
 def get_pagination(current_page, page_count):  # 显示首两个页码、最后两个页码、当前页码以及当前页码前后各三个页码
@@ -70,17 +53,6 @@ def get_pagination(current_page, page_count):  # 显示首两个页码、最后�
     }
     return data
 
-
-# def create_blog_verify_code():
-#     code = ''
-#     seq = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-#     while code == '':
-#         for i in range(0, 7):
-#             char = random.choice(seq)
-#             code = code + char
-#         if BlogSpiderVerify.objects.all().filter(verify_code=code).exists():
-#             code = ''
-#     return code
 
 
 def verify_csdn_url(url):

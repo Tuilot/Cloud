@@ -7,9 +7,6 @@ from resource.models import CompetitionResource
 
 @login_required(login_url='/account/login')
 @permission_required('account.manager', login_url='/account/permission_denied')
-
-
-
 def resource_upload(request):
     if request.method == 'POST':
         file = request.FILES.get('select_file')
